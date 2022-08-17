@@ -21,7 +21,7 @@ zeta = 0.05145 / (2 * wn)
 
 
 grid on 
-%rlocus(P_motor)
+rlocus(P_motor)
 hold off
 
 % Etapa 2
