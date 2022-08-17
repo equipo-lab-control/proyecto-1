@@ -9,7 +9,7 @@ R=13.6;
 L=10.51E-3;
 b=4E-3;
 
-table_motor_2 = readtable('motor_2.csv')
+table_motor_2 = readtable('./data/motor_2.csv')
 
 
 
