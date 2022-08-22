@@ -7,5 +7,6 @@ La idea para poder trabajar en las etapas, es hacer que cada etapa sea un archiv
 
 ## Etapa 1
 
-Para poder hacer la regresion lineal en matlab, se puede usar la [documentacion de matlab][https://la.mathworks.com/help/matlab/data_analysis/linear-regression.html]
+- Para poder hacer la regresion lineal en matlab, se puede usar la [documentacion de matlab]( https://la.mathworks.com/help/matlab/data_analysis/linear-regression.html )
+- Para poder usar el `fitlm` use esta [pagina](https://la.mathworks.com/help/stats/fitlm.html)
 
