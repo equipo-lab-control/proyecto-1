@@ -10,8 +10,20 @@ L=10.51E-3;
 b=4E-3;
 
 table_motor_2 = readtable('./data/motor_2.csv' );
-table_motor_2.Properties.VariableNames = { 'vel_rads', 'vel_rpm', 'volts' };
-table_motor_2
+table_motor_2.Properties.VariableNames = { 'vel_rads', 'vel_rpm', 'volts' }
+
+table_vel_rads_volts = removevars(table_motor_2,"vel_rpm");
+
+
+model = fitlm(table_vel_rads_volts)
+
+Ke = model.Coefficients{"vel_rads","Estimate"}
+
+% plot(model)
+
+
+
+H
 
 
 %clc
