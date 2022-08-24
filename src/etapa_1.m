@@ -22,6 +22,7 @@ Ke = model.Coefficients{"vel_rads","Estimate"}
 
 % Saves the variable Ke in Ke file
 save('data/Ke', 'Ke')
+save('data/initial', 'J', 'R', 'L', 'b')
 
 % todo: poner la funcion para guardar figura
 % plot(model)
