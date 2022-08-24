@@ -1,2 +1,5 @@
 
-etapa1.asv
+src/*.asv
+
+document-docs
+src/data/*.mat
