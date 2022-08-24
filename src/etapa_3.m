@@ -1,16 +1,16 @@
 clc
 clear
 
+load('data/Ke')
+load('data/initial.mat')
+load('data/parametros_trans.mat')
+load('data/polos')
+load('data/samplingP.mat')
+load('data/zeros.mat')
 
+
+K = ganancia;
 %%%%%%%%%%%
-% todo importar de los otras etapas
-%datos motor
-J=3.78E-3;
-R=13.6;
-K=0.044;
-L=10.51E-3;
-b=4E-3;
-
 
 % Datos del pid
 OS=0.15; 
