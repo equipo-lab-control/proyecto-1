@@ -35,4 +35,7 @@ bode(P_motor)
 
 hold off
 
-
+% Tiempo de muestreo
+frecuencia = 1.29e+03;
+frecuenciaNyquist = frecuencia * 2;
+samplingP = 1/frecuenciaNyquist;
