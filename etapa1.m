@@ -1,5 +1,9 @@
 clc
 clear
+
+
+%%%%%%%%%%%
+% todo importar de los otras etapas
 %datos motor
 J=3.78E-3;
 R=13.6;
@@ -7,31 +11,62 @@ K=0.044;
 L=10.51E-3;
 b=4E-3;
 
-OS=0.15; %porcentaje sobre impulso (no es porcentaje)
-Ts=1.2; %Tiempo de asentamiento (sec)
-syms s
-Gp=simplify(K/((J*s+b)*(L*s+R)+K^2)) %transferencia de motor
 
-%Zeta y wn hay que despejarlas de Ts y OT en PPT
+% Datos del pid
+OS=0.15; 
+Ts=1.2; 
 
-zeta=sqrt((log(OS))^2/((log(OS))^2+pi^2)) %amortiguamiento deseado
-wn=4/(zeta*Ts) %frecuencia natural deseada
+%%%%%%%%%%%
 
-Td=simplify(wn^2/(s^2+2*zeta*s+wn^2))    %transferencia deseada
+% Despeje de los parametros ideals
 
-syms ti td Kc C %ti td Kc son coeficientes de la funcion de transferencia del controlador
-Gc=Kc*(1+1/(ti*s)+td*s) %Transferencia de controlador
-H=C/C; %Parece redundante, es el sensor, C es la salida, sirve a la hora de hacerlo iterativo
+%amortiguamiento deseado
+zeta_d = double(sqrt((log(OS))^2 / ((log(OS))^2 + pi^2)))
 
-T=simplify(Gc*Gp/(1+H*Gc*Gp))
+%frecuencia natural deseada
+wn_d = double(4 / (zeta_d * Ts) )
 
-polos=poles(Td); %polos FT deseada
-polo1=double(polos(1)) %Polo1
-polo2=double(polos(2)) %Polo2
-a=10*real(polo1);%Polo agregado para igualar Td a T
+%%%%%%%%%%%
 
-Td=Td/(s+a); %TD con polo agregado
-eq1=Td==T
-pretty(eq1) %Hay que multiplicar T*s/s para tenerlo en terminos de s^3+s^2+s+A
+% Polo adicional
 
-%Igualando terminos de los denominadores se obtienen ti td y Kc 
+% Parametros del controlado (presentacion)
+syms ti td Kc s
+
+Td = simplify( wn_d^2 / ( s^2 + 2*zeta_d*s+wn_d^2 ))    %transferencia deseada
+
+polos_d = poles(Td); %polos FT deseada
+
+% Si salen coeficientes negativos, alejalo mas
+alejamiento = 10;
+polo_adicional = double(alejamiento * min(real(polos_d)))
+
+
+Td_polo_extra = expand( wn_d^2 / ( ( s^2 + 2*zeta_d*s+wn_d^2 ) * (s - polo_adicional) ))    
+
+[num, den] = numden(Td_polo_extra)
+den_coefs = coeffs(den);
+
+num_simplified = double(num / den_coefs(end))
+
+% estan en orden de s0, s1, s2 ...
+den_simplified = double(den_coefs / den_coefs(end))
+
+%%%%%%%%%%%% Sistemas de ecuaciones %%%%%%%%%%%%%%%%
+syms ti td Kc 
+
+eq1 = K * Kc / (J * L * ti) == den_simplified(1)
+eq2 = (b * R + K^2 + K * Kc) / (J * L) == den_simplified(2)
+eq3 = (J * R + b * L + K * Kc * td) / (J * L) == den_simplified(3)
+
+
+results = solve(eq1, eq2, eq3);
+
+% Coeficientes del pid
+Kc = double(results.Kc)
+ti = double(results.ti)
+td = double(results.td)
+
+save("data/coeficientes_pid", 'Kc', 'ti', 'td')
+
+
