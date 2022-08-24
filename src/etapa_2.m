@@ -5,7 +5,8 @@ load('data/Ke.mat')
 load('data/initial.mat')
 
 % s
-syms s
+
+s = tf('s')
 
 
 P_motor = Ke/((J*s+b)*(L*s+R)+Ke^2)
@@ -34,9 +35,20 @@ zero = zero(P_motor)
 
 %hold off
 
+% Tiempo de muestreo
+
+% todo guardar grafica y poner frecuencia
+
+
+% r locus 
+frecuencia = 1.29e+03;
+frecuenciaNyquist = frecuencia * 2;
+samplingP = 1/frecuenciaNyquist;
+
 save('data/polos', 'polos')
 save('data/zeros', 'zero')
 save('data/parametros_trans', 'P_motor', 'wn', 'ganancia', 'zeta')
+save('data/samplingP', 'samplingP')
 
 
 
