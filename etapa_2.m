@@ -25,12 +25,12 @@ K = P_motor_simplified.K;
 zero = P_motor_simplified.Z{:};
 poles = P_motor_simplified.P{:};
 
-denominator = conv([1 -poles(1)], [1 -poles(2)]);
+denominator = conv([1 -poles(1)], [1 -poles(2)])
 
 wn2 = denominator(end);
-wn = sqrt(wn2);
+wn = sqrt(wn2)
 zeta = denominator(end-1) / (2 * wn)
-ganancia = K / wn2;
+ganancia = K / wn2
 
 
 % aqui salen las frecuencias de los diferentes polos<
@@ -51,7 +51,7 @@ frecuenciaNyquist = frecuencia * 2;
 samplingP = 1/frecuenciaNyquist;
 
 
-save('data/polos', 'polos')
+save('data/polos', 'poles')
 save('data/zeros', 'zero')
 save('data/funcion_transferencia_motor_datos', 'P_motor', 'wn', 'ganancia', 'zeta')
 save('data/samplingP', 'samplingP')

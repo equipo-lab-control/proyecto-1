@@ -20,7 +20,8 @@ catch ME
 end
 
 
-K = ganancia;
+% todo: cambiar el nombre de la variable
+K = Ke;
 %%%%%%%%%%%
 
 % Datos del pid
@@ -44,7 +45,7 @@ wn_d = double(4 / (zeta_d * Ts) )
 % Parametros del controlado (presentacion)
 syms ti td Kc s
 
-Td = simplify( wn_d^2 / ( s^2 + 2*zeta_d*s+wn_d^2 ))    %transferencia deseada
+Td = simplify( wn_d^2 / ( s^2 + 2 * zeta_d* s * wn_d +wn_d^2 ))    %transferencia deseada
 
 polos_d = poles(Td); %polos FT deseada
 
@@ -53,7 +54,7 @@ alejamiento = 10;
 polo_adicional = double(alejamiento * min(real(polos_d)))
 
 
-Td_polo_extra = expand( wn_d^2 / ( ( s^2 + 2*zeta_d*s+wn_d^2 ) * (s - polo_adicional) ))    
+Td_polo_extra = expand( wn_d^2 / ( ( s^2 + 2*zeta_d*s*wn_d+wn_d^2 ) * (s - polo_adicional) ))    
 
 [num, den] = numden(Td_polo_extra)
 den_coefs = coeffs(den);
