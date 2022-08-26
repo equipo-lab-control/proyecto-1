@@ -6,7 +6,7 @@ try
     load('data/Ke.mat');
     load('data/initial.mat');
 catch ME 
-    load('etapa_1.m');
+    etapa_1;
     load('data/Ke.mat');
     load('data/initial.mat');
 end

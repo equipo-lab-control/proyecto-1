@@ -10,7 +10,7 @@ try
     load('data/samplingP.mat')
     load('data/zeros.mat')
 catch ME 
-    load('etapa_2.m');
+    etapa_2;
     load('data/Ke')
     load('data/initial.mat')
     load('data/funcion_transferencia_motor_datos.mat')
