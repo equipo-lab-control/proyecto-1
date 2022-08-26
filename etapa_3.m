@@ -50,7 +50,7 @@ Td = simplify( wn_d^2 / ( s^2 + 2 * zeta_d* s * wn_d +wn_d^2 ))    %transferenci
 polos_d = poles(Td); %polos FT deseada
 
 % Si salen coeficientes negativos, alejalo mas
-alejamiento = 10;
+alejamiento = 1000;
 polo_adicional = double(alejamiento * min(real(polos_d)))
 
 
@@ -78,7 +78,9 @@ results = solve(eq1, eq2, eq3);
 Kc = double(results.Kc)
 ti = double(results.ti)
 td = double(results.td)
+Ki = double(Kc / ti)
+Kd = double(Kc * td)
 
-save("data/coeficientes_pid", 'Kc', 'ti', 'td')
+save("data/coeficientes_pid", 'Kc', 'ti', 'td', 'Ki', 'Kd')
 
 
