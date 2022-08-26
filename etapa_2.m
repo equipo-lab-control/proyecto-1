@@ -1,14 +1,21 @@
 clear 
 clc
 
-load('data/Ke.mat')
-load('data/initial.mat')
+% Loads data
+try 
+    load('data/Ke.mat');
+    load('data/initial.mat');
+catch ME 
+    load('etapa_1.m');
+    load('data/Ke.mat');
+    load('data/initial.mat');
+end
 
-% s
 
+% Variable de laplace
 s = tf('s')
 
-
+% Funcion de transferencia;
 P_motor = Ke/((J*s+b)*(L*s+R)+Ke^2)
 
 P_motor_simplify = P_motor / 3.973e-05
@@ -19,36 +26,21 @@ ganancia = 0.044 / wn^2;
 
 zeta = 0.05145 / (2 * wn)
 
-
-%grid on 
-%%rlocus(P_motor)
-%hold off
-
-% Etapa 2
-
 polos = pole(P_motor)
 zero = zero(P_motor)
 
-%grid on 
-%hold on 
-%bode(P_motor)
-
-%hold off
 
 % Tiempo de muestreo
 
-% todo guardar grafica y poner frecuencia
+% todo: hacer grafica de rlocus
+% todo: sacar ferecuencia de la grafica de rlocus
 
-
-% r locus 
 frecuencia = 1.29e+03;
 frecuenciaNyquist = frecuencia * 2;
 samplingP = 1/frecuenciaNyquist;
 
+
 save('data/polos', 'polos')
 save('data/zeros', 'zero')
-save('data/parametros_trans', 'P_motor', 'wn', 'ganancia', 'zeta')
+save('data/funcion_transferencia_motor_datos', 'P_motor', 'wn', 'ganancia', 'zeta')
 save('data/samplingP', 'samplingP')
-
-
-
