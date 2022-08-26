@@ -4,3 +4,5 @@ src/*.asv
 document-docs
 
 Excel Proyecto 1.xlsx
+
+data/*.mat
