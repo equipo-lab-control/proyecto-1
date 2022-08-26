@@ -1,12 +1,23 @@
 clc
 clear
 
-load('data/Ke')
-load('data/initial.mat')
-load('data/parametros_trans.mat')
-load('data/polos')
-load('data/samplingP.mat')
-load('data/zeros.mat')
+% Loads data
+try 
+    load('data/Ke')
+    load('data/initial.mat')
+    load('data/funcion_transferencia_motor_datos.mat')
+    load('data/polos')
+    load('data/samplingP.mat')
+    load('data/zeros.mat')
+catch ME 
+    load('etapa_2.m');
+    load('data/Ke')
+    load('data/initial.mat')
+    load('data/funcion_transferencia_motor_datos.mat')
+    load('data/polos')
+    load('data/samplingP.mat')
+    load('data/zeros.mat')
+end
 
 
 K = ganancia;
