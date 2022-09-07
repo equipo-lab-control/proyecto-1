@@ -74,7 +74,7 @@ eq3 = (J * R + b * L + K * Kc * td) / (J * L) == den_simplified(3)
 
 results = solve(eq1, eq2, eq3);
 
-% Coeficientes del pid
+% Coeficientes del pid continuo
 Kc = double(results.Kc)
 ti = double(results.ti) % segundos
 td = double(results.td)
@@ -82,5 +82,6 @@ Ki = double(Kc / ti)
 Kd = double(Kc * td)
 
 save("data/coeficientes_pid", 'Kc', 'ti', 'td', 'Ki', 'Kd')
+
 
 
