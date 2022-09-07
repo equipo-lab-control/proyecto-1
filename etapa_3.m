@@ -36,7 +36,7 @@ Ts=1.2;
 zeta_d = double(sqrt((log(OS))^2 / ((log(OS))^2 + pi^2)))
 
 %frecuencia natural deseada
-wn_d = double(4 / (zeta_d * Ts) )
+wn_d = double(4 / (zeta_d * Ts) ) %rads
 
 %%%%%%%%%%%
 
@@ -76,7 +76,7 @@ results = solve(eq1, eq2, eq3);
 
 % Coeficientes del pid
 Kc = double(results.Kc)
-ti = double(results.ti)
+ti = double(results.ti) % segundos
 td = double(results.td)
 Ki = double(Kc / ti)
 Kd = double(Kc * td)
