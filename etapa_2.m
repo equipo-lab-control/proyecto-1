@@ -3,7 +3,7 @@ clc
 
 % Loads data
 try 
-    load('data/Ke.mat');
+    load('data/Ke.mat'); % rads^-1
     load('data/initial.mat');
 catch ME 
     etapa_1;
@@ -23,20 +23,21 @@ P_motor_simplified = zpk(P_motor)
 
 K = P_motor_simplified.K;
 zero = P_motor_simplified.Z{:};
-polos = P_motor_simplified.P{:};
+polos = P_motor_simplified.P{:}; % rads
 
 denominator = conv([1 -polos(1)], [1 -polos(2)])
 
-wn2 = denominator(end);
-wn = sqrt(wn2)
-zeta = denominator(end-1) / (2 * wn)
-ganancia = K / wn2
+wn2 = denominator(end); 
+wn = sqrt(wn2); % rads
+wn_hz = rads2hz(wn);
+zeta = denominator(end-1) / (2 * wn) % no tiene dimensiones
+ganancia = K / wn2 % ~rad / sV~
 
 
 % aqui salen las frecuencias de los diferentes polos<
 % con esto sacas las frecuencias
-damp(P_motor_simplified)
-[wn_table, zeta_table, ~] = damp(P_motor_simplified)
+damp(P_motor_simplified);
+[wn_table, zeta_table, ~] = damp(P_motor_simplified) % rads
 
 
 
@@ -46,12 +47,13 @@ damp(P_motor_simplified)
 %% todo: hacer grafica de rlocus
 %% todo: sacar ferecuencia de la grafica de rlocus
 
-frecuencia = max(wn_table)
-frecuenciaNyquist = frecuencia * 2;
-samplingP = 1/frecuenciaNyquist;
+frecuencia = max(wn_table) % rads
+frecuencia_hz = rads2hz(frecuencia)
+frecuenciaNyquist_hz = frecuencia_hz * 2; % hz
+samplingP = 1/frecuenciaNyquist_hz; % s
 
 
 save('data/polos', 'polos')
 save('data/zeros', 'zero')
-save('data/funcion_transferencia_motor_datos', 'P_motor', 'wn', 'ganancia', 'zeta')
+save('data/funcion_transferencia_motor_datos', 'P_motor', 'wn_hz',  'wn', 'ganancia', 'zeta')
 save('data/samplingP', 'samplingP')
